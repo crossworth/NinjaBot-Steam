@@ -296,7 +296,7 @@ SteamBot.prototype.init = function() {
 			self.ACCOUNTS[i].check_games();
 
 			if (self.ACCOUNTS[i].socket) {
-				if (self.ACCOUNTS[account_id].client._CHECK_EVERY_TIME == false) {
+				if (self.ACCOUNTS[i].client._CHECK_EVERY_TIME == false) {
 					// check every 2 hours
 					self.ACCOUNTS[i].socket.emit('steambot last check', {time: SteamBot.prototype.LAST_CHECK, seconds: 7200});
 				}
