@@ -16,7 +16,6 @@ function SteamAccount(settings, socket) {
 	var steam_account_self = this;
 
 	this.socket = null;
-	this.client._LAST_TIME_CHECKED = null;
 
 	if (socket) {
 		this.socket = socket;
@@ -24,6 +23,8 @@ function SteamAccount(settings, socket) {
 
 	this.settings = this.default.extend(settings);
 	this.client = new SteamUser({enablePicsCache: true, promptSteamGuardCode: false});
+
+	this.client._LAST_TIME_CHECKED = null;
 
 	this.client._LOGIN = this.settings.login;
 	this.client._PASSWORD = this.settings.password;
