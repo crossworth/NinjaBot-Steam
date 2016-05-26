@@ -16,7 +16,7 @@ function SteamAccount(settings, socket) {
 	var steam_account_self = this;
 
 	this.socket = null;
-	this.last_check_time = null;
+	this.client._LAST_TIME_CHECKED = null;
 
 	if (socket) {
 		this.socket = socket;
@@ -234,7 +234,7 @@ function SteamAccount(settings, socket) {
 		}); // webSession
 
 
-		this.set_last_time_check(Helper.get_time_seconds());
+		$client._LAST_TIME_CHECKED = Helper.get_time_seconds();
 	}; // _CHECK_GAMES
 
 	this.client._FARM_TRADING_CARDS = function() {
@@ -326,11 +326,11 @@ SteamAccount.prototype.logon = function () {
 };
 
 SteamAccount.prototype.set_last_time_check = function (time) {
-	this.last_check_time = time;
+	this.client._LAST_TIME_CHECKED = time;
 };
 
 SteamAccount.prototype.get_last_time_check = function () {
-	return this.last_check_time;
+	return this.client._LAST_TIME_CHECKED;
 };
 
 
