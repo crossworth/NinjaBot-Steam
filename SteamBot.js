@@ -175,7 +175,7 @@ SteamBot.prototype.init = function() {
 						return;
 					}
 
-					self.ACCOUNTS[account_id].client.force_check_games();
+					self.ACCOUNTS[account_id].force_check_games();
 				});
 
 				socket.on('steambot client add steam game', function(payload) {
