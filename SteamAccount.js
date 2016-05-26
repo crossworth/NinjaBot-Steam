@@ -16,6 +16,7 @@ function SteamAccount(settings, socket) {
 	var steam_account_self = this;
 
 	this.socket = null;
+	this.last_check_time = null;
 
 	if (socket) {
 		this.socket = socket;
@@ -136,6 +137,7 @@ function SteamAccount(settings, socket) {
 	}); // on disconnected
 
 	this.client._CHECK_GAMES = function() {
+
 		if (this._IS_LOGGED == false) {
 			return;
 		}
@@ -230,6 +232,9 @@ function SteamAccount(settings, socket) {
 				}
 			}); // Request
 		}); // webSession
+
+
+		this.set_last_time_check(Helper.get_time_seconds());
 	}; // _CHECK_GAMES
 
 	this.client._FARM_TRADING_CARDS = function() {
@@ -319,6 +324,15 @@ SteamAccount.prototype.logon = function () {
 		"password": this.settings.password
 	});
 };
+
+SteamAccount.prototype.set_last_time_check = function (time) {
+	this.last_check_time = time;
+};
+
+SteamAccount.prototype.get_last_time_check = function () {
+	return this.last_check_time;
+};
+
 
 SteamAccount.prototype.logoff = function () {
 	this.client._IS_LOGGED = false;

@@ -138,7 +138,10 @@ SteamBot.prototype.init = function() {
 
 				if (self.ACCOUNTS[account_id].client._CHECK_EVERY_TIME == false) {
 					// check every 2 hours
-					socket.emit('steambot last check', {time: SteamBot.prototype.LAST_CHECK, seconds: 7200});
+					socket.emit('steambot last check', {time: self.ACCOUNTS[account_id].get_last_time_check(), seconds: 7200});
+				} else {
+					// check every 10 minutes = 600 seconds
+					socket.emit('steambot last check', {time: SteamBot.prototype.LAST_CHECK, seconds: 600});
 				}
 
 				if (self.ACCOUNTS[account_id].client._IS_LOGGED) {
@@ -255,8 +258,6 @@ SteamBot.prototype.init = function() {
 
 
 		socket.emit('steambot uptime', {uptime: os.uptime()});
-		// check every 10 minutes = 600 seconds
-		socket.emit('steambot last check', {time: SteamBot.prototype.LAST_CHECK, seconds: 600});
 	}); // on connection
 
 	SteamBot.prototype.SocketIO.set('authorization', function (handshakeData, accept) {
@@ -298,7 +299,7 @@ SteamBot.prototype.init = function() {
 			if (self.ACCOUNTS[i].socket) {
 				if (self.ACCOUNTS[i].client._CHECK_EVERY_TIME == false) {
 					// check every 2 hours
-					self.ACCOUNTS[i].socket.emit('steambot last check', {time: SteamBot.prototype.LAST_CHECK, seconds: 7200});
+					self.ACCOUNTS[i].socket.emit('steambot last check', {time: self.ACCOUNTS[i].get_last_time_check(), seconds: 7200});
 				}
 			}
 		}
