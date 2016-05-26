@@ -1,0 +1,10 @@
+{
+	"socket": {
+		"port": "3132"
+	}, 
+	"database": {
+		"accounts": "./db/accounts.db",
+		"logs": "./db/logs.db",
+		"keys": "./db/keys.db"
+	}
+}

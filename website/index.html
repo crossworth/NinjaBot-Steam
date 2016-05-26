@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SteamBot::NinjaBot - steam.pedrohenrique.ninja</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.css">
+	<link href='https://fonts.googleapis.com/css?family=Quicksand:400,300,700' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="css/uikit.min.css">
+	<link rel="stylesheet" type="text/css" href="css/uikit.gradient.min.css">
+	<link rel="stylesheet" type="text/css" href="css/remodal.css">
+	<link rel="stylesheet" type="text/css" href="css/remodal-default-theme.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="js/moment.js"></script>
+	<script type="text/javascript" src="js/remodal.min.js"></script>
+	<script type="text/javascript" src="js/uikit.min.js"></script>
+	<script type="text/javascript" src="js/components/form-password.js"></script>
+	<script type="text/javascript" src="js/socket.io.min.js"></script>
+	<script type="text/javascript" src="js/global.js"></script>
+
+</head>
+<body>
+
+<div class="uk-grid">
+    <div class="uk-width-1-10"></div>
+    <div class="uk-width-8-10">
+    	<div class="topo_logo">
+    		<img class="logo_img" src="imgs/steam.png"><span class="logo_texto">SteamBot</span>
+    	</div>
+
+    	<div id="content_wrap">
+
+    		<div class="conteudo" id="loading">
+	    		<section class="loader">
+				  <div class="content">
+				    <h1 class="text">Carregando...</h1>
+				    <div class="box">
+				      <i class="fa fa-laptop"></i>
+				      <div class="line"></div>
+				      <i class="fa fa-database"></i>
+				    </div>
+				  </div>
+				</section>
+	    	</div> <!-- loading -->
+
+    		<div class="conteudo hide" id="server_off">
+	    		<h2>Ops, ocorreu um erro</h2>
+	    		<span class="server_erro_message">Não foi possível conectar no servidor, o server pode estar desligado ou estar reiniciando, tente novamente mais tarde.</span>
+	    	</div> <!-- server off -->
+
+	    	<div class="conteudo hide" id="login">
+	    		<form class="uk-form" onsubmit="do_login(); return false;" id="form_login">
+	    			<h3>Login</h3>
+		    		<div class="uk-form-row">
+		    			<input type="text" name="email_login" id="email_login" placeholder="Email">
+		    		</div>
+
+				    <div class="uk-form-row uk-form-password">
+				        <input type="password" name="password_login" id="password_login" placeholder="Senha">
+				        <a class="uk-form-password-toggle" data-uk-form-password>Mostrar</a>
+				    </div>
+				    <div class="uk-form-row">
+		    			<button type="submit" class="uk-button uk-button-primary">Login</button>
+		    			<button onclick="show_page(4);return false;" class="uk-button">Fazer registro</button>
+		    		</div>
+				    
+				</form>
+	    	</div> <!-- login -->
+
+	    	<div class="conteudo hide" id="register">
+	    		<form class="uk-form" onsubmit="do_register(); return false;" id="form_register">
+	    			<h3>Cadastrar nova conta</h3>
+		    		<div class="uk-form-row">
+		    			<input type="text" name="email_register" id="email_register" placeholder="Email">
+		    		</div>
+
+				    <div class="uk-form-row uk-form-password">
+				        <input type="password" name="password_register" id="password_register" placeholder="Senha">
+				        <a class="uk-form-password-toggle" data-uk-form-password>Mostrar</a>
+				    </div>
+				    <div class="uk-form-row">
+		    			<button type="submit" class="uk-button uk-button-primary">Registrar</button>
+		    			<button onclick="show_page(1);return false;" class="uk-button">Fazer login</button>
+		    		</div>
+				    
+				</form>
+	    	</div> <!-- register -->
+
+	    	<div class="conteudo hide" id="log">
+	    		<div id="menu_topo">
+	    			<nav class="uk-navbar">
+					    <ul class="uk-navbar-nav">
+					        <li class="uk-parent" data-uk-dropdown="{mode:'click'}"><a><i class="fa fa-steam" aria-hidden="true"></i> Steam</a>
+					        	<div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom" style="top: 40px; left: 0px;">
+                                    <ul class="uk-nav uk-nav-navbar">
+                                        <li id="add_steam_acc_btn" class="hide"><a data-remodal-target="add_steam_account">Adicionar conta Steam</a></li>
+                                        <li id="add_steam_key_btn" class="hide"><a data-remodal-target="add_key_steam_account">Adicionar jogo Steam</a></li>
+                                        <li id="check_games" class="hide"><a onclick="check_games();">Verificar jogos</a></li>
+                                         <li id="gen_steamguard_code" class="hide"><a onclick="open_steamguard_code_gen();">Gerar código do SteamGuard</a></li>
+                                        <li id="remove_steam_acc_btn" class="hide"><a onclick="remove_steam_acc();">Remover conta Steam</a></li>
+                                    </ul>
+                                </div>
+					        </li>
+					        <li class="uk-parent" data-uk-dropdown="{mode:'click'}"><a><i class="fa fa-cog" aria-hidden="true"></i> Conta</a>
+					        	<div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom" style="top: 40px; left: 0px;">
+                                    <ul class="uk-nav uk-nav-navbar">
+                                    	<li><a onclick="show_keys()">Códigos de Jogos não usados</a></li>
+                                        <li><a onclick="do_logout()">Deslogar</a></li>
+                                    </ul>
+                                </div>
+					        </li>
+					    </ul>
+					    <div id="stats">
+					   		<span class='stats_info'>Steam Status: <span class="status_value" id="steam_status_value">
+					   			<i class="fa fa-refresh fa-spin" aria-hidden="true"></i>
+					   		</span></span>
+
+					   		<span class='stats_info'>Novos itens: <span class="status_value" id="new_itens_value">
+					    		<i class="fa fa-refresh fa-spin" aria-hidden="true"></i>
+					    	</span></span>
+
+					    	<span class='stats_info'>Server Uptime: <span class="status_value" id="uptime_value">
+					    		<i class="fa fa-refresh fa-spin" aria-hidden="true"></i>
+					    	</span></span>
+
+					    	<span class='stats_info'>Nova atualização: <span class="status_value" id="new_update_time">
+					    		<i class="fa fa-refresh fa-spin" aria-hidden="true"></i>
+					    	</span></span>
+					    	
+					    </div>
+					</nav>
+	    		</div> <!-- menu topo -->
+	    		<div id="log">
+	    			<table class="uk-table uk-table-striped">
+	    				<caption>Log da sua conta</caption>
+					    <thead>
+					        <tr>
+					            <th width='170'>Data</th>
+					            <th>Mensagem</th>
+					        </tr>
+					    </thead>
+					    <tbody id="log_scroll">
+					        
+					    </tbody>
+	    			</table>
+	    		</div> <!-- log -->
+	    	</div> <!-- menu topo -->
+	    </div> <!-- log -->
+    </div> <!-- uk-width-8-10 -->
+    <div class="uk-width-1-10"></div>
+</div> <!-- uk-grid -->
+
+<div class="remodal" data-remodal-id="error_modal" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <h2 id="error_title"></h2>
+  <p id="error_message">
+    
+  </p>
+  <br>
+  <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
+</div>
+
+
+<div id="steamguard_code_gen" class="remodal" data-remodal-id="steamguard_code_gen" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <h2>Gerar código Steamguard</h2>
+  <p>
+  	<div id="code_wrap" class="hide">
+	    <span id="code_big" onclick="select_text(this);"></span>
+	    <div id="code_counter">
+	    	<div id="code_counter_fill">
+	    		
+	    	</div>
+	    </div>
+    </div>
+  </p>
+  <br>
+  <button data-remodal-action="confirm" onclick="close_steamguard_code_gen();" class="remodal-confirm">OK</button>
+</div>
+
+
+<div class="remodal" id="add_steam_account_remodal" data-remodal-id="add_steam_account" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+  <button data-remodal-action="close" class="remodal-close"></button>
+
+  	<h2>Adicionar Conta Steam</h2>
+  	<form class="uk-form" onsubmit="add_steam_acc(); return false;">
+	  	<div class="uk-form-row">
+			<input type="text" name="steam_acc_login" id="steam_acc_login" placeholder="Conta da Steam" class="uk-form-width-medium">
+		</div>
+		<div class="uk-form-row">
+			<input type="password" name="steam_acc_password" id="steam_acc_password" placeholder="Senha da Steam" class="uk-form-width-medium">
+		</div>
+		<div class="uk-form-row">
+			<button class="uk-button uk-button-mini uk-button-primary" onclick="$(this).hide();$('#steam_acc_shared_secret').show(); return false;" style="margin: 0 auto; margin-bottom: 5px;display: block;">Adicionar Shared Secret</button>
+			<input type="text" class="hide" style="width: 200px;" name="steam_acc_shared_secret" id="steam_acc_shared_secret" placeholder="Código Shared Secret" class="uk-form-width-medium">
+		</div>
+  <br>
+  	<button data-remodal-action="confirm" onclick="add_steam_acc();" type="submit" class="remodal-confirm">OK</button>
+	<button data-remodal-action="cancel" class="remodal-cancel">Cancelar</button>
+  </form>
+</div>
+
+
+
+<div class="remodal" id="steam_guard_remodal" data-remodal-id="steamguard_steam_account" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+  <button data-remodal-action="close" class="remodal-close"></button>
+
+  	<h2>Informe o código do SteamGuard</h2>
+  	<form class="uk-form" onsubmit="send_steamguard(); return false;">
+	  	<div class="uk-form-row">
+			<input type="text" name="steam_steamguard" id="steam_steamguard" placeholder="Código do SteamGuard" class="uk-form-width-medium">
+		</div>
+  <br>
+  	<button data-remodal-action="confirm" onclick="send_steamguard();" type="submit" class="remodal-confirm">OK</button>
+  	<button data-remodal-action="cancel" class="remodal-cancel">Cancelar</button>  
+  </form>
+</div>
+
+<div class="remodal" id="steam_add_key_remodal" data-remodal-id="add_key_steam_account" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+  <button data-remodal-action="close" class="remodal-close"></button>
+
+  	<h2>Adicionar Jogo na Steam</h2>
+  	<form class="uk-form" onsubmit="add_key_on_steam(); return false;">
+	  	<div class="uk-form-row">
+			<input type="text" name="steam_key" id="steam_key" placeholder="Códiog do Jogo" class="uk-form-width-medium">
+		</div>
+  <br>
+  	<button data-remodal-action="confirm" onclick="add_key_on_steam();" type="submit" class="remodal-confirm">OK</button>
+  	<button data-remodal-action="cancel" class="remodal-cancel">Cancelar</button>  
+  </form>
+</div>
+
+
+<div class="remodal" id="steambot_keys_not_used" data-remodal-id="steambot_keys_not_used" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+  <button data-remodal-action="close" class="remodal-close"></button>
+
+  	<h3>Códigos de Jogos não usados</h3>
+  	<table id="list_code_not_used" class="uk-table uk-table-hover uk-table-striped uk-table-condensed">
+		<thead>
+	        <tr>
+	            <th width='100'>Código</th>
+	            <th width='100'>Por</th>
+	            <th width='100'>Jogo</th>
+	            <th></th>
+	        </tr>
+    	</thead>
+    	<tbody id="keys_table">
+
+	    </tbody>
+
+  	</table>
+
+  	<br>
+  	<button data-remodal-action="confirm" onclick="" type="submit" class="remodal-confirm">OK</button> 
+  </form>
+</div>
+
+</body>
+</html>

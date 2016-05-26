@@ -1,0 +1,275 @@
+html, 
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+	background-color: #F5F3EE;
+	width: 100%;
+	font-family: 'Quicksand', sans-serif !important;
+}
+
+::selection {
+	background-color: #4A96AD;
+	color: #F5F3EE;
+}
+
+.topo_logo {
+	padding-top: 20px;
+	position: relative;
+}
+
+.logo_img {
+	width: 80px;
+}
+
+.logo_texto {
+	font-family: 'Quicksand', sans-serif;
+	margin-left: 5px;
+	font-size: 22px;
+	position: absolute;
+	display: inline-block;
+	bottom: 0px;
+}
+
+#content_wrap {
+	margin-top: 10px;
+	padding: 20px;
+	box-sizing: border-box;
+	background-color: #FFFFFF;
+	border-radius: 3px;
+	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+.conteudo h3 {
+	font-family: 'Quicksand', sans-serif;
+	font-weight: bold;
+}
+
+#form_login, #form_register {
+	width: 200px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+
+
+#form_login .uk-form-row, #form_register .uk-form-row {
+	max-width: 200px;
+}
+
+#form_login .uk-form-password, #form_register .uk-form-password {
+	position: relative;
+}
+
+#form_login .uk-form-password .uk-form-password-toggle, #form_register .uk-form-password .uk-form-password-toggle {
+	position: absolute;
+	right: 15px;
+    top: 5px;
+}
+
+.hide {
+	display: none;
+}
+
+#menu_topo {
+	position: relative;
+}
+
+#log {
+	margin-top: 5px;
+}
+
+table tbody#log_scroll {
+	display:block;
+	width: 100% !important;
+	height: 300px !important;
+	overflow: hidden;
+	overflow-y: scroll;
+}
+
+thead, tbody#log_scroll tr {
+    display:table;
+    width:100%;
+    table-layout:auto;
+}
+
+table tbody#keys_table {
+	display:block;
+	width: 100% !important;
+	height: 200px !important;
+	overflow: hidden;
+	overflow-y: scroll;
+}
+
+thead, tbody#keys_table tr {
+    display:table;
+    width:100%;
+    table-layout:auto;
+}
+
+#stats {
+	float: right;
+	margin-top: 15px;
+	margin-right: 5px;
+}
+
+.status_value {
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+.message_log_area {
+	text-align: left;
+}
+
+#server_off {
+	width: 80%;
+	margin: 0 auto;
+}
+
+#server_off h2 {
+	font-family: 'Quicksand', sans-serif !important;
+}
+
+#error_message  {
+	font-size: 18px;
+}
+
+#log_scroll {
+	font-family: 'Ubuntu Condensed', sans-serif;
+	font-size: 18px;
+}
+
+#steamguard_code_gen #code_big {
+	font-size: 26px;
+    font-weight: bold;
+    background: #ddd;
+    padding: 10px;
+    color: black;
+    box-sizing: border-box;
+    position: relative;
+    top: 9px;
+}
+
+#steamguard_code_gen  #code_counter {
+    width: 280px;
+    height: 30px;
+    background: #efefef;
+    margin: 0 auto;
+    position: relative;
+    top: 26px;
+    box-shadow: inset 0px 0px 9px rgba(0, 0, 0, 0.7);
+}
+
+#steamguard_code_gen  #code_counter #code_counter_fill{
+	position: absolute;
+    width: 100%;
+    background: #483d3d;
+    height: 100%;
+    margin: 0 auto;
+    left: 0px;
+    right: 0px;
+}
+
+.loader {
+	width: 100%;
+	height: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.loader .content .text {
+	font-size: 30px;
+	color: black;
+	font-family: 'Quicksand', sans-serif !important;
+	text-align: center;
+	margin: 0;
+	margin-bottom: 5px;
+}
+
+.loader .content .box {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	padding: 10px;
+	border: 2px solid rgb(82, 81, 81);
+	border-radius: 4px;
+	margin-bottom: 10px;
+}
+
+.loader .content .box i {
+	color: rgb(82, 81, 81);
+}
+
+.loader .content .box i.fa-laptop {
+	color: rgb(82, 81, 81);
+	font-size: 50px;
+}
+
+.loader .content .box i.fa-database {
+	color: rgb(82, 81, 81);
+	font-size: 44px;
+	margin-left: 5px;
+}
+
+.loader .content .box .line {
+	position: relative;
+	display: inline-block;
+	height: 2px;
+	width: 90px;
+	background: rgb(82, 81, 81);
+}
+
+.loader .content .box .line:after {
+	position: absolute;
+	content: "";
+	top: -3px;
+	height: 8px;
+	width: 8px;
+	background: rgb(82, 81, 81);
+	border-radius: 50%;
+	-webkit-animation: dot 4s ease infinite;
+	animation: dot 4s ease infinite;
+}
+
+
+@-webkit-keyframes dot {
+	0% {
+		left: 0;
+	}
+	50% {
+		left: 82px;
+	}
+	100% {
+		left: 0;
+	}
+}
+
+@keyframes dot {
+	0% {
+		left: 0;
+	}
+	50% {
+		left: 82px;
+	}
+	100% {
+		left: 0;
+	}
+}
